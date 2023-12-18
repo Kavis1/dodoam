@@ -1,0 +1,232 @@
+﻿
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@200&family=Work+Sans&family=Ysabeau+Office:wght@200;400;700;900&display=swap');
+:root {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 0;
+    margin: 0;
+    font-family: 'Ysabeau Office', sans-serif;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: right;
+    height: 50px;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+
+h1 {
+    margin-left: 25px;
+    font-size: 33px;
+    font-weight: 900;
+}
+
+.menu-toggle {
+    padding-bottom: 3px;
+    align-items: center;
+    justify-content: center;
+    height: 34px;
+    aspect-ratio: 1;
+    border: solid 1px #fff;
+    border-radius: 5px;
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+    background-color: transparent;
+    transition: 0.55s;
+}
+
+    .menu-toggle:hover {
+        color: #1f1f1f;
+        background-color: #fff;
+        border-color: #1f1f1f;
+    }
+
+
+.sidebar {
+    width: 0;
+    height: 100%;
+    position: fixed;
+    background-color: #333;
+    color: #fff;
+    overflow-y: auto;
+    transition: width 0.5s ease-out, margin-left 0.75s ease;
+    border-top: solid 2px #1f1f1f;
+    border-right: solid 2px #1f1f1f;
+}
+
+.sidebar-open {
+    width: 260px;
+    margin-left: 0; 
+}
+
+    .sidebar-open + main {
+        margin-left: 250px;
+    }
+
+
+#searchInput {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 80%;
+    border-radius: 5px;
+    border: solid 1px #1f1f1f;
+    transition: 0.75s ease;
+    background-color: transparent;
+    color: #fff;
+    outline: none;
+    font-weight: lighter;
+}
+    #searchInput::placeholder {
+        color: #fff;
+        font-weight: lighter;
+        font-family: 'Work Sans', sans-serif;
+    }
+    #searchInput:focus {
+        width: 88%;
+        margin-left: 5px;
+        background-color: #1f1f1f;
+        color: #fff;
+        border: none;
+        outline: none;
+        font-weight:normal;
+    }
+
+.random-genre {
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 80%;
+    border: solid 1px #1f1f1f;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.genre-icons {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+
+.genre-icon {
+    padding: 8px;
+    margin: 5px;
+    background-color: #555;
+    color: #fff;
+    cursor: pointer;
+}
+
+#languageToggle {
+    padding: 10px;
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+main {
+    margin-top: 90px;
+    padding: 20px;
+    transition: margin-left 0.4s ease-in-out;
+}
+
+.movie-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    transition: margin-left 0.65s ease;
+}
+
+.movie-block {
+    width: 210px;
+    aspect-ratio: 6/7;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 15px;
+    padding: 1px;
+    color: #fff;
+    font-weight: normal;
+    border: solid 2px #1f1f1f;
+    background-color: #333;
+    transition: 0.75s;
+}
+    .movie-block:hover {
+        background-color: #555;
+        font-size: larger;
+    }
+
+.movie-block img {
+    border-radius: 14px;
+    width: 208px;
+    padding-left: 1px;
+
+}
+
+
+
+.movie-title {
+    margin-top: 1%;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    overflow: auto;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    max-width: 1000px;
+}
+
+.close-modal {
+    float: right;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+
+
+
+@media only screen and (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: 0%;
+        transition: height 0.4s ease-out;
+    }
+    .sidebar-open {
+        height: 60%;
+    }
+        .sidebar-open + main {
+            margin-left: 0;
+        }
+
+    main {
+        margin-left: 0;
+    }
+}
