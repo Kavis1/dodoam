@@ -15,7 +15,6 @@ $(document).ready(function () {
     let headerText;
 
     if (query) {
-        // Modify the headerText to include the search query
         headerText = `${selectedLanguage === 'ru-RU' ? 'Поиск' : selectedLanguage === 'uk-UA' ? 'Пошук' : 'Search'}: ${query}`;
     } else if (categoryId) {
         headerText = getGenreName(categoryId, selectedLanguage);
@@ -55,7 +54,6 @@ $(document).ready(function () {
                 previousCategoryMovies = currentMovies;
                 currentMovies = data.results;
 
-                // Append the new movies to the existing ones
                 displayMovies(currentMovies.slice(0, moviesPerPage), '#randomMovies', true);
 
                 randomMoviesVisible = true;
@@ -74,10 +72,9 @@ $(document).ready(function () {
     }
 
     function switchToRandomMovies() {
-        // Clear the container associated with the previous category
+
         clearMoviesContainer();
 
-        // Display the movies from the previous category
         displayMovies(previousCategoryMovies, '#moviesList', false);
     }
 
@@ -110,7 +107,6 @@ $(document).ready(function () {
                     currentMovies = currentMovies.concat(data.results);
                 }
 
-                // Append the new movies to the existing ones
                 displayMovies(data.results, '#moviesList', loadingMoreMovies);
                 loadingMoreMovies = false;
             },
@@ -130,13 +126,12 @@ $(document).ready(function () {
     }
 	
     if (genreId !== 'random') {
-        // Empty movies list if not in Random Movies
+	    
         $('#moviesList').empty();
     }
 
     fetchMovies(currentPage);
 
-    // Добавлен обработчик события прокрутки для подгрузки дополнительных фильмов
     $(window).on('scroll', function () {
         if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
             loadMoreMovies();
@@ -187,7 +182,6 @@ $(document).ready(function () {
                     currentMovies = currentMovies.concat(data.results);
                 }
 
-                // Append the new movies to the existing ones
                 displayMovies(data.results, '#moviesList', loadingMoreMovies);
                 loadingMoreMovies = false;
             },
@@ -207,7 +201,7 @@ $(document).ready(function () {
 
 
     $('#searchInput').on('keypress', function (event) {
-        if (event.which === 13) { // 13 - код клавиши "Enter"
+        if (event.which === 13) {
             event.preventDefault();
             const query = $(this).val().trim();
             searchMovies(query);
@@ -216,11 +210,10 @@ $(document).ready(function () {
     });
 
     $('#searchForm').on('submit', function (event) {
-        event.preventDefault(); // Предотвратить стандартное поведение отправки формы
+        event.preventDefault();
 
         const query = $('#searchInput').val().trim();
 
-        // Проверить, была ли нажата клавиша Enter и является ли запрос непустым перед вызовом функции searchMovies
         if (event.originalEvent.submitter && event.originalEvent.submitter.type === 'submit' && query !== '') {
             searchMovies(query);
             hideRandomMovies();
@@ -235,7 +228,6 @@ $(document).ready(function () {
     function displayMovies(movies, containerId, append) {
         const container = $(containerId);
 
-        // Clear the existing movies list if it's not a search result
         if (!append) {
             container.empty();
         }
@@ -327,14 +319,12 @@ $(document).ready(function () {
             modalContent.append(closeButton, title, starsRating, rating, overview, posterContainer, actorsList, trailerContainer);
             modal.append(modalContent).show();
 
-            // Добавляем обработчик события для закрытия модального окна при клике за его пределами
             $(document).on('mouseup', function (event) {
                 if (!modalContent.is(event.target) && modalContent.has(event.target).length === 0) {
                     hideModal();
                 }
             });
 
-            // Добавляем класс для блокировки прокрутки страницы
             $('body').addClass('modal-open');
         })
         .fail(function (error) {
@@ -350,12 +340,10 @@ const hideModal = function () {
     const modal = $('#movieModal');
     const trailerContainer = modal.find('.trailer-container');
 
-    // Остановка воспроизведения трейлера
     trailerContainer.empty();
 
     modal.hide();
 
-    // Удаляем класс для разблокировки прокрутки страницы
     $('body').removeClass('modal-open');
 };
 
@@ -398,7 +386,6 @@ const hideModal = function () {
                 buttonText = 'Random Movies';
         }
 
-        // Change the element type to 'button' and add the 'random-genre' class
         button.replaceWith(`<button class="random-genre" id="unknownGenreButton">${buttonText}</button>`);
 
         // Add click event handler to the button
@@ -415,7 +402,6 @@ const hideModal = function () {
     language = selectedLanguage;
     localStorage.setItem('selectedLanguage', selectedLanguage);
 
-    // Save the current category before changing the language
     const savedCategory = localStorage.getItem('selectedCategory');
 
     updateHeader(savedCategory, null, selectedLanguage);
@@ -426,19 +412,16 @@ const hideModal = function () {
         $(this).text(genreName);
     });
 
-    // If the saved category is 'random', fetch random movies, otherwise fetch movies by genre
     if (savedCategory === 'random') {
         getRandomMovies();
     } else {
         getMoviesByGenre(savedCategory);
     }
 
-    // Update the URL to include the selected language
     const queryParams = new URLSearchParams(window.location.search);
     queryParams.set('lang', selectedLanguage);
     window.history.replaceState({}, '', `${window.location.pathname}?${queryParams}`);
 
-    // Move languageToggle to the top based on the selected language
     moveLanguageToggleToTop(selectedLanguage);
 }
 
@@ -464,8 +447,8 @@ const hideModal = function () {
                 'ru-RU': 'Приключения',
                 'uk-UA': 'Пригоди'
             },
-            16: {
-                'en-US':            'Animation',
+        16: {
+            'en-US':  'Animation',
             'ru-RU': 'Мультфильм',
             'uk-UA': 'Мультфільм'
         },
@@ -539,7 +522,6 @@ const hideModal = function () {
             'ru-RU': 'Вестерн',
             'uk-UA': 'Вестерн'
         },
-        // Add other genres if needed
     };
 
     return translations[genreId] ? translations[genreId][lang || language] : 'Unknown Genre';
@@ -550,11 +532,10 @@ let sidebarOpen = false;
     function toggleSidebar() {
         const sidebar = $('.sidebar');
         sidebar.toggleClass('sidebar-open', sidebarOpen);
-        // Update the button text/icon based on sidebar state
+
         $('.menu-toggle').html(sidebarOpen ? '&#9776;' : '&#9776;');
     }
 
-    // Initially close the sidebar
     toggleSidebar();
 
 function loadSavedData() {
@@ -578,7 +559,6 @@ function loadSavedData() {
         updateUnknownGenreButtonLabel(savedLanguage);
     }
 
-    // Restore search parameters if available
     const searchParamsJson = localStorage.getItem('searchParams');
     if (searchParamsJson) {
         const searchParams = JSON.parse(searchParamsJson);
@@ -586,17 +566,14 @@ function loadSavedData() {
     }
 }
 
-// Function to move languageToggle to the top based on the selected language
 function moveLanguageToggleToTop(selectedLanguage) {
     const languageToggle = $('#languageToggle');
     const selectedOption = languageToggle.find(`option[value="${selectedLanguage}"]`);
     const selectedText = selectedOption.text();
 
-    // Set the text and value of the selected option to the currently selected language
     selectedOption.text(languageToggle.find(':selected').text());
     selectedOption.val(languageToggle.find(':selected').val());
 
-    // Set the text and value of the currently selected option to the previously selected language
     languageToggle.find(':selected').text(selectedText);
     languageToggle.find(':selected').val(selectedLanguage);
 }
